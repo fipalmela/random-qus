@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import './style.css';
-import Logo from './logo.svg';
+import Logo from './Logo.svg';
 
 function App() {
   const [setSelected, setSetSelected] = useState("B1");
@@ -88,7 +88,7 @@ function App() {
     setSetSelected(e.target.value);
   };
 
-  /* const generateNumbers = () => {
+  const generateNumbers = () => {
     const { startPage, endPage } = sets[setSelected];
     // const range = max - min + 1;
     const numbersArray = [];
@@ -114,50 +114,7 @@ function App() {
     const updatedGeneratedNumbers = [...generatedNumbers, numOne, numTwo];
     localStorage.setItem("generatedNumbers", JSON.stringify(updatedGeneratedNumbers));
     setGeneratedNumbers(updatedGeneratedNumbers);
-  }; */
-
-  const generateNumbers = () => {
-    const { startPage, endPage } = sets[setSelected];
-    const numbersArray = [];
-    for (let i = parseInt(startPage); i <= parseInt(endPage); i++) {
-      numbersArray.push(i);
-    }
-    const filteredNumbers = numbersArray.filter(
-      (number) => !generatedNumbers.includes(number)
-    );
-    if (filteredNumbers.length < 2) {
-      alert("Number not available.");
-      return;
-    }
-    filteredNumbers.sort((a, b) => a - b); // Step 1
-    const midpoint = (filteredNumbers[0] + filteredNumbers[filteredNumbers.length - 1]) / 2; // Step 2
-    let closestIndex = 0;
-    let closestDifference = Math.abs(filteredNumbers[0] - midpoint);
-    for (let i = 1; i < filteredNumbers.length; i++) { // Step 3
-      const difference = Math.abs(filteredNumbers[i] - midpoint);
-      if (difference < closestDifference) {
-        closestIndex = i;
-        closestDifference = difference;
-      }
-    }
-    const numOne = filteredNumbers[closestIndex]; // Step 4
-    let farthestIndex = 0;
-    let farthestDifference = Math.abs(filteredNumbers[0] - numOne);
-    for (let i = 1; i < filteredNumbers.length; i++) { // Step 5
-      const difference = Math.abs(filteredNumbers[i] - numOne);
-      if (difference > farthestDifference) {
-        farthestIndex = i;
-        farthestDifference = difference;
-      }
-    }
-    const numTwo = filteredNumbers[farthestIndex]; // Step 6
-    setNum1(numOne);
-    setNum2(numTwo);
-    const updatedGeneratedNumbers = [...generatedNumbers, numOne, numTwo];
-    localStorage.setItem("generatedNumbers", JSON.stringify(updatedGeneratedNumbers));
-    setGeneratedNumbers(updatedGeneratedNumbers);
   };
-
 
   const resetNumbers = () => {
     localStorage.removeItem("generatedNumbers");
@@ -203,14 +160,14 @@ function App() {
           isRunning ? (
             <>
             <div className={`counter-wrapper ${isRunning ? '' : 'hide'}`}>
-              <p className="number-display">{count < 10 ? `0${count}` : count}</p>
+              <p className="number-display">{count < 10 ? `0${count}` : count},</p>
               <p className="number-display">{count < 10 ? `0${count+2}` : count+2}</p>
             </div>
             </>
           ) : (
             <>
             <div className={`counter-wrapper ${isRunning ? 'hide' : ''}`}>
-              <p className="number-display"> {num1 ? (<>{num1}</>) : (<>00</>) } </p>
+              <p className="number-display"> {num1 ? (<>{num1},</>) : (<>00,</>) } </p>
               <p className="number-display"> {num2 ? (<>{num2}</>) : (<>00</>) } </p>
             </div>
             </>
