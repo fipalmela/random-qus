@@ -41,8 +41,12 @@ p.number-display {
   margin-top: 20px;
 }
 
+button.reset:disabled {
+  opacity: 0.8;
+}
 button.reset {
-  padding: 12px;
+  padding: 8px;
+  margin-left: 10px;
   font-weight: 600;
   align-self: end;
   outline: 0;
@@ -52,6 +56,7 @@ button.reset {
   border-radius: 2px;
   border: 1px solid transparent;
 }
+
 button.reset:hover {
   background: #f5f8ff;
 }
@@ -243,4 +248,33 @@ select:-moz-focusring {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+}
+.gen-numbers-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 40px;
+  position: relative;
+  min-height: 40px;
+}
+
+.gen-numbers-item {
+  margin-top: 4px;
+}
+
+span.gen-numbers-set {
+  padding: 4px 8px;
+  background: #140f03;
+  margin-right: 2px;
+  margin-left: 2px;
+  display: inline-block;
+  margin-bottom: 4px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.gen-numbers-btns {
+  display: flex;
+  min-width: 265px;
+  justify-content: flex-end;
 }
