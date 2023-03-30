@@ -3,13 +3,14 @@ import './style.css';
 import Logo from './Logo.svg';
 
 function App() {
-  const [setSelected, setSetSelected] = useState("B1");
+  const [setSelected, setSetSelected] = useState("A");
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
   const [generatedNumbers, setGeneratedNumbers] = useState([]);
 
   const [count, setCount] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [showGenerated, setShowGenerated] = useState(false);
 
   useEffect(() => {
     let timer;
@@ -22,62 +23,63 @@ function App() {
   }, [isRunning]);
 
   const handleStartStop = () => {
-    setIsRunning((isRunning) => !isRunning);
-    if (!isRunning) generateNumbers();
+    if (setSelected) {
+      setShowGenerated(false);
+      setIsRunning((isRunning) => !isRunning);
+      if (!isRunning) generateNumbers();
+    } else {
+      alert('No Ajza Selected')
+    }
   };
-/*
-  const sets = {
-    "Set 1": {
-      min: 542,
-      max: 604,
-    },
-    "Set 2": {
-      min: 482,
-      max: 604,
-    },
-    "Set 3": {
-      min: 302,
-      max: 604,
-    },
-    "Set 4": {
-      min: 3,
-      max: 604,
-    },
-  }; */
 
   const sets = {
-    "B1" : {
-      ajza: "3 Ajza (Juz 1 to 3)",
+    "A": {
+      ajza: "1 Juz (28)",
+      startPage: 542,
+      endPage: 561
+    },
+    "B1": {
+      ajza: "3 Ajza (1 - 3)",
       startPage: 3,
       endPage: 61
     },
-    "B2" : {
-      ajza: "3 Ajza (Juz 28 to 30)",
+    "B2": {
+      ajza: "3 Ajza (28 - 30)",
       startPage: 542,
       endPage: 604
     },
-    "C1" : {
-      ajza: "6 Ajza (Juz 1 to 6)",
+    "B2-X": {
+      ajza: "3 Ajza (28 - 30)",
+      startPage: 542,
+      endPage: 581
+    },
+    "C1": {
+      ajza: "6 Ajza (1 - 6)",
       startPage: 3,
       endPage: 101
     },
-    "C2" : {
-      ajza: "6 Ajza (Juz 25 to 30)",
+    "C2": {
+      ajza: "6 Ajza (25 - 30)",
       startPage: 482,
       endPage: 604
     },
-    "D1" : {
-      ajza: "15 Ajza (Juz 1 to 15)",
+    "D1": {
+      ajza: "15 Ajza (1 - 15)",
       startPage: 3,
       endPage: 281
     },
-    "D2" : {
-      ajza: "15 Ajza (Juz 16 to 30)",
+    "D2": {
+      ajza: "15 Ajza (16 - 30)",
       startPage: 302,
       endPage: 604
     },
-    "E" : {
-      ajza: "Complete Quran",
+    "D2-X": {
+      ajza: "15 Ajza (16 - 30)",
+      startPage: 402,
+      endPage: 604
+    },
+    "E": {
+      ajza: "Whole Quran",
       startPage: 3,
       endPage: 604
     }
@@ -89,31 +91,31 @@ function App() {
   };
 
   const generateNumbers = () => {
-    const { startPage, endPage } = sets[setSelected];
-    // const range = max - min + 1;
-    const numbersArray = [];
-    for (let i = parseInt(startPage); i <= parseInt(endPage); i++) {
-      numbersArray.push(i);
-    }
-    const filteredNumbers = numbersArray.filter(
-      (number) => !generatedNumbers.includes(number)
-    );
-    if (filteredNumbers.length < 2) {
-      alert("Number not available.");
-      return;
-    }
-    const randomIndex1 = Math.floor(Math.random() * filteredNumbers.length);
-    let numOne = filteredNumbers[randomIndex1];
-    let filteredNumbers2 = filteredNumbers.filter(
-      (number) => number !== numOne
-    );
-    const randomIndex2 = Math.floor(Math.random() * filteredNumbers2.length);
-    let numTwo = filteredNumbers2[randomIndex2];
-    setNum1(numOne);
-    setNum2(numTwo);
-    const updatedGeneratedNumbers = [...generatedNumbers, numOne, numTwo];
-    localStorage.setItem("generatedNumbers", JSON.stringify(updatedGeneratedNumbers));
-    setGeneratedNumbers(updatedGeneratedNumbers);
+      const { startPage, endPage } = sets[setSelected];
+      // const range = max - min + 1;
+      const numbersArray = [];
+      for (let i = parseInt(startPage); i <= parseInt(endPage); i++) {
+        numbersArray.push(i);
+      }
+      const filteredNumbers = numbersArray.filter(
+        (number) => !generatedNumbers.includes(number)
+      );
+      if (filteredNumbers.length < 2) {
+        alert("Number not available.");
+        return;
+      }
+      const randomIndex1 = Math.floor(Math.random() * filteredNumbers.length);
+      let numOne = filteredNumbers[randomIndex1];
+      let filteredNumbers2 = filteredNumbers.filter(
+        (number) => number !== numOne
+      );
+      const randomIndex2 = Math.floor(Math.random() * filteredNumbers2.length);
+      let numTwo = filteredNumbers2[randomIndex2];
+      setNum1(numOne);
+      setNum2(numTwo);
+      const updatedGeneratedNumbers = [...generatedNumbers, numOne, numTwo];
+      localStorage.setItem("generatedNumbers", JSON.stringify(updatedGeneratedNumbers));
+      setGeneratedNumbers(updatedGeneratedNumbers);
   };
 
   const resetNumbers = () => {
@@ -131,6 +133,11 @@ function App() {
     }
   }, []);
 
+  const pairs = [];
+
+  for (let i = 0; i < generatedNumbers.length; i += 2) {
+    pairs.push([generatedNumbers[i], generatedNumbers[i + 1]]);
+  }
 
   return (
     <>
@@ -142,13 +149,17 @@ function App() {
         <label>
         <span>Select from:</span>
           <select className="minimal" value={setSelected} onChange={handleSetChange}>
-            <option value="B1">B1: {sets.B1.ajza}</option>
-            <option value="B2">B2: {sets.B2.ajza} </option>
-            <option value="C1">C1: {sets.C1.ajza} </option>
-            <option value="C2">C2: {sets.C2.ajza} </option>
-            <option value="D1">D1: {sets.D1.ajza} </option>
-            <option value="D2">D2: {sets.D2.ajza} </option>
-            <option value="E">E: {sets.E.ajza} </option>
+          <option value="">-- Select Ajza --</option>
+          <option value="A">A: 1 Juz (28)</option>
+          <option value="B1">B1: 3 Ajza (1 - 3)</option>
+          <option value="B2">B2: 3 Ajza (28 - 30)</option>
+          <option value="B2-X">B2-X: 3 Ajza (28 - 30)</option>
+          <option value="C1">C1: 6 Ajza (1 - 6)</option>
+          <option value="C2">C2: 6 Ajza (25 - 30)</option>
+          <option value="D1">D1: 15 Ajza (1 - 15)</option>
+          <option value="D2">D2: 15 Ajza (16 - 30)</option>
+          <option value="D2-X">D2-X: 15 Ajza (16 - 30)</option>
+          <option value="E">E: Whole Quran</option>
           </select>
         </label>
       </div>
@@ -186,7 +197,59 @@ function App() {
           </span>
         </button>
         <br /><br />
-        <button className="reset" onClick={resetNumbers}>Reset all</button>
+
+      </div>
+      <div className="gen-numbers-wrapper">
+        <div className="gen-numbers-item">
+          {
+            showGenerated && (
+              <>
+                {
+                  pairs.length !== 0 ? (
+                  <>
+                    {
+                      pairs.map((pair, index) => (
+                        <React.Fragment key={index}>
+                          <span className="gen-numbers-set">{pair.join(', ')}</span>
+                          {/* {index !== pairs.length - 1 ? <span> | </span> : null} */}
+                        </React.Fragment>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                  <span className="gen-numbers-set"> No number generated yet </span>
+                  </>
+                )
+                }
+              </>
+            )
+          }
+
+        </div>
+        <div className="gen-numbers-btns">
+          <button
+            disabled={isRunning}
+            className="reset"
+            onClick={()=> {
+            if (!isRunning) {
+              setShowGenerated(!showGenerated)
+            }
+          }}>
+            {
+              showGenerated ? (
+                <>
+                  hide previous numbers
+                </>
+              ) : (
+                <>
+                  Show previous numbers
+                </>
+              )
+            }
+
+          </button>
+          <button className="reset" onClick={resetNumbers}>Reset all</button>
+        </div>
       </div>
     </div>
     </>
