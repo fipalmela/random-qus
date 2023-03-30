@@ -28,7 +28,7 @@ function App() {
       setIsRunning((isRunning) => !isRunning);
       if (!isRunning) generateNumbers();
     } else {
-      alert('No Ajza Selected')
+      alert('No Category Selected')
     }
   };
 
@@ -147,9 +147,9 @@ function App() {
       </div>
       <div className="dropdown">
         <label>
-        <span>Select from:</span>
+        <span>Select From:</span>
           <select className="minimal" value={setSelected} onChange={handleSetChange}>
-          <option value="">-- Select Ajza --</option>
+          <option value="">-- Select Category --</option>
           <option value="A">A: 1 Juz (28)</option>
           <option value="B1">B1: 3 Ajza (1 - 3)</option>
           <option value="B2">B2: 3 Ajza (28 - 30)</option>
@@ -167,9 +167,11 @@ function App() {
     <div className="App">
 
       <div className="numbers-wrapper">
+      <div className="number-title">Page number</div>
         {
           isRunning ? (
             <>
+
             <div className={`counter-wrapper ${isRunning ? '' : 'hide'}`}>
               <p className="number-display">{count < 10 ? `0${count}` : count},</p>
               <p className="number-display">{count < 10 ? `0${count+2}` : count+2}</p>
@@ -238,11 +240,11 @@ function App() {
             {
               showGenerated ? (
                 <>
-                  hide previous numbers
+                  Hide
                 </>
               ) : (
                 <>
-                  Show previous numbers
+                  List
                 </>
               )
             }
