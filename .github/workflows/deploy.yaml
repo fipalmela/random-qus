@@ -27,5 +27,5 @@ jobs:
             password: ${{ secrets.SFTP_PASSWORD }}
             port: ${{ secrets.SFTP_PORT }}
             local_path: './build/*'
-            remote_path: '/public_html/random-verse'
+            remote_path: '/public_html/generator'
             sftp_only: true

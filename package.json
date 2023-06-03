@@ -1,7 +1,7 @@
 {
-  "name": "random-verse",
+  "name": "generator",
   "version": "0.2.0",
-  "homepage": "https://hifz-competition.org/random-verse/",
+  "homepage": "https://hifz-competition.org/generator/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
