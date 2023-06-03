@@ -3,7 +3,7 @@ import './style.css';
 import Logo from './Logo.svg';
 
 function App() {
-  const [setSelected, setSetSelected] = useState("A");
+  const [setSelected, setSetSelected] = useState("A28");
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
   const [generatedNumbers, setGeneratedNumbers] = useState([]);
@@ -40,10 +40,20 @@ function App() {
   };
 
   const sets = {
-    "A": {
+    "A28": {
       ajza: "1 Juz (28)",
       startPage: 542,
       endPage: 561
+    },
+    "A29": {
+      ajza: "1 Juz (29)",
+      startPage: 562,
+      endPage: 581
+    },
+    "A30": {
+      ajza: "1 Juz (30)",
+      startPage: 582,
+      endPage: 604
     },
     "B1": {
       ajza: "3 Ajza (1 - 3)",
@@ -54,11 +64,6 @@ function App() {
       ajza: "3 Ajza (28 - 30)",
       startPage: 542,
       endPage: 604
-    },
-    "B2-X": {
-      ajza: "3 Ajza (28 - 30)",
-      startPage: 542,
-      endPage: 581
     },
     "C1": {
       ajza: "6 Ajza (1 - 6)",
@@ -80,11 +85,6 @@ function App() {
       startPage: 302,
       endPage: 604
     },
-    "D2-X": {
-      ajza: "15 Ajza (16 - 30)",
-      startPage: 402,
-      endPage: 604
-    },
     "E": {
       ajza: "Whole Quran",
       startPage: 3,
@@ -104,28 +104,31 @@ function App() {
       for (let i = parseInt(startPage); i <= parseInt(endPage); i++) {
         numbersArray.push(i);
       }
+
       const filteredNumbers = numbersArray.filter(
         (number) => !generatedNumbers.includes(number)
       );
 
-      if (filteredNumbers.length < 2) {
+      const middleIndex = Math.floor(filteredNumbers.length / 2);
+      const firstHalf = filteredNumbers.slice(0, middleIndex);
+      const secondHalf = filteredNumbers.slice(middleIndex);
+
+      if (firstHalf.length < 1 || secondHalf.length < 1) {
         alert("Number not available.");
         return;
       }
-      const randomIndex1 = Math.floor(Math.random() * filteredNumbers.length);
-      let numOne = filteredNumbers[randomIndex1];
+      const randomIndex1 = Math.floor(Math.random() * firstHalf.length);
+      let numOne = firstHalf[randomIndex1];
 
-      let filteredNumbers2 = filteredNumbers.filter(
-        (number) => number !== numOne
-        );
-
-      const randomIndex2 = Math.floor(Math.random() * filteredNumbers2.length);
-      let numTwo = filteredNumbers2[randomIndex2];
+      const randomIndex2 = Math.floor(Math.random() * secondHalf.length);
+      let numTwo = secondHalf[randomIndex2];
 
       setNum1(numOne);
       setNum2(numTwo);
+
       const updatedGeneratedNumbers = [...generatedNumbers, numOne, numTwo];
       localStorage.setItem("generatedNumbers", JSON.stringify(updatedGeneratedNumbers));
+
       setGeneratedNumbers(updatedGeneratedNumbers);
   };
 
@@ -161,16 +164,16 @@ function App() {
         <span>Select From:</span>
           <select className="minimal" value={setSelected} onChange={handleSetChange}>
           <option value="">-- Select Category --</option>
-          <option value="A">A: 1 Juz (28)</option>
-          <option value="B1">B1: 3 Ajza (1 - 3)</option>
-          <option value="B2">B2: 3 Ajza (28 - 30)</option>
-          <option value="B2-X">B2-X: 3 Ajza (28 - 30)</option>
-          <option value="C1">C1: 6 Ajza (1 - 6)</option>
-          <option value="C2">C2: 6 Ajza (25 - 30)</option>
-          <option value="D1">D1: 15 Ajza (1 - 15)</option>
-          <option value="D2">D2: 15 Ajza (16 - 30)</option>
-          <option value="D2-X">D2-X: 15 Ajza (16 - 30)</option>
-          <option value="E">E: Whole Quran</option>
+          <option value="A28">1 Juz (28)</option>
+          <option value="A29">1 Juz (29)</option>
+          <option value="A30">1 Juz (30)</option>
+          <option value="B1">3 Ajza (1 - 3)</option>
+          <option value="B2">3 Ajza (28 - 30)</option>
+          <option value="C1">6 Ajza (1 - 6)</option>
+          <option value="C2">6 Ajza (25 - 30)</option>
+          <option value="D1">15 Ajza (1 - 15)</option>
+          <option value="D2">15 Ajza (16 - 30)</option>
+          <option value="E">Whole Quran</option>
           </select>
         </label>
       </div>
