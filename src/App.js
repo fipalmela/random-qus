@@ -9,14 +9,21 @@ function App() {
   const [generatedNumbers, setGeneratedNumbers] = useState([]);
 
   const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [showGenerated, setShowGenerated] = useState(false);
+  const generateRandomThreeDigitNumber = () => {
+    var min = 100; // Minimum value (inclusive)
+    var max = 999; // Maximum value (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   useEffect(() => {
     let timer;
     if (isRunning) {
       timer = setInterval(() => {
-        setCount((count) => (count + 1) % 100);
+        setCount(generateRandomThreeDigitNumber());
+        setCount2(generateRandomThreeDigitNumber());
       }, 10);
     }
     return () => clearInterval(timer);
@@ -92,25 +99,29 @@ function App() {
 
   const generateNumbers = () => {
       const { startPage, endPage } = sets[setSelected];
-      // const range = max - min + 1;
       const numbersArray = [];
+
       for (let i = parseInt(startPage); i <= parseInt(endPage); i++) {
         numbersArray.push(i);
       }
       const filteredNumbers = numbersArray.filter(
         (number) => !generatedNumbers.includes(number)
       );
+
       if (filteredNumbers.length < 2) {
         alert("Number not available.");
         return;
       }
       const randomIndex1 = Math.floor(Math.random() * filteredNumbers.length);
       let numOne = filteredNumbers[randomIndex1];
+
       let filteredNumbers2 = filteredNumbers.filter(
         (number) => number !== numOne
-      );
+        );
+
       const randomIndex2 = Math.floor(Math.random() * filteredNumbers2.length);
       let numTwo = filteredNumbers2[randomIndex2];
+
       setNum1(numOne);
       setNum2(numTwo);
       const updatedGeneratedNumbers = [...generatedNumbers, numOne, numTwo];
@@ -173,8 +184,10 @@ function App() {
             <>
 
             <div className={`counter-wrapper ${isRunning ? '' : 'hide'}`}>
-              <p className="number-display">{count < 10 ? `0${count}` : count},</p>
-              <p className="number-display">{count < 10 ? `0${count+2}` : count+2}</p>
+              <p className="number-display">
+                {count}, {count2}
+              </p>
+             {/*  <p className="number-display">{count < 10 ? `0${count+2}` : count+2}</p> */}
             </div>
             </>
           ) : (
