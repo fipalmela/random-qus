@@ -164,16 +164,16 @@ function App() {
         <span>Select From:</span>
           <select className="minimal" value={setSelected} onChange={handleSetChange}>
           <option value="">-- Select Category --</option>
-          <option value="A28">1 Juz (28)</option>
-          <option value="A29">1 Juz (29)</option>
-          <option value="A30">1 Juz (30)</option>
-          <option value="B1">3 Ajza (1 - 3)</option>
-          <option value="B2">3 Ajza (28 - 30)</option>
-          <option value="C1">6 Ajza (1 - 6)</option>
-          <option value="C2">6 Ajza (25 - 30)</option>
-          <option value="D1">15 Ajza (1 - 15)</option>
-          <option value="D2">15 Ajza (16 - 30)</option>
-          <option value="E">Whole Quran</option>
+          <option value="A28">A28: 1 Juz (28)</option>
+          <option value="A29"> A29: 1 Juz (29)</option>
+          <option value="A30">A30: 1 Juz (30)</option>
+          <option value="B1">B1: 3 Ajza (1 - 3)</option>
+          <option value="B2">B2: 3 Ajza (28 - 30)</option>
+          <option value="C1">C1: 6 Ajza (1 - 6)</option>
+          <option value="C2">C2: 6 Ajza (25 - 30)</option>
+          <option value="D1">D1: 15 Ajza (1 - 15)</option>
+          <option value="D2">D2: 15 Ajza (16 - 30)</option>
+          <option value="E">E: Whole Quran</option>
           </select>
         </label>
       </div>
