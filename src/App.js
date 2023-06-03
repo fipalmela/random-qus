@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import './style.css';
-import Logo from './Logo.svg';
+import Logo from './logo.svg';
 
 function App() {
   const [setSelected, setSetSelected] = useState("A28");
