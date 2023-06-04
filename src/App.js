@@ -73,7 +73,6 @@ const App = () => {
   const [selectedCount, setSelectedCount] = useState(1);
 
   const handleDropdownChange = (event) => {
-    resetPageNumbers();
     setShowGenerated(false);
     const { value } = event.target;
     setSelectedCount(parseInt(value));
@@ -203,7 +202,7 @@ const App = () => {
     }
   }, []);
 
-  const pairs = generatePairs(generatedPageNumbers, selectedCount);
+  const pairs = generatedPageNumbers;
 
   // if (resultPageNumber) console.log(typeof resultPageNumber.join(', '));
 
@@ -217,10 +216,7 @@ const App = () => {
         <div className="div">
           <img width={200} alt="logo" src={Logo} />
         </div>
-        <div className="div">
-
-        </div>
-        <div className="dropdown">
+        <div className="dropdown left-auto">
           <label>
             <span>Select From:</span>
             <select
@@ -237,8 +233,9 @@ const App = () => {
             </select>
           </label>
         </div>
-        <div className="div">
-          <select id="dropdown" value={selectedCount} onChange={handleDropdownChange}>
+        <div className="dropdown">
+          <span>Number of pages:</span>
+          <select className="minimal" id="dropdown" value={selectedCount} onChange={handleDropdownChange}>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -314,7 +311,7 @@ const App = () => {
                     {pairs.map((pair, index) => (
                       <React.Fragment key={index}>
                         <span className="gen-numbers-set">
-                          {pair.join(", ")}
+                          {pair}
                         </span>
                       </React.Fragment>
                     ))}

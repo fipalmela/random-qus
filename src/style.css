@@ -63,7 +63,12 @@ button.reset:focus {
   background: #f5f8ff;
   border: 1px solid #2a2a2a;
 }
-
+.left-auto {
+  margin-left: auto;
+}
+.dropdown:last-child {
+  margin-left: 20px;
+}
 .dropdown span {
   padding-right: 10px;
   padding-bottom: 10px;
@@ -257,7 +262,6 @@ button.button-82-pushable.disalbed .button-82-edge {
   max-width: 800px;
   margin-top: 40px;
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
 }
 .gen-numbers-wrapper {
