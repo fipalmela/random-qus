@@ -73,6 +73,8 @@ const App = () => {
   const [selectedCount, setSelectedCount] = useState(1);
 
   const handleDropdownChange = (event) => {
+    resetPageNumbers();
+    setShowGenerated(false);
     const { value } = event.target;
     setSelectedCount(parseInt(value));
   };
@@ -137,6 +139,8 @@ const App = () => {
 
   const handleSetChange = (e) => {
     setSetSelected(e.target.value);
+    resetPageNumbers();
+    setShowGenerated(false);
   };
   const generatePageNumbers = () => {
     const { startPage, endPage } = sets[setSelected];
@@ -149,8 +153,8 @@ const App = () => {
       (number) => !generatedPageNumbers.includes(number)
     );
 
-    const dropdownValue = selectedCount;
-
+    const dropdownElement = document.getElementById('dropdown');
+    const dropdownValue = dropdownElement.value;
     // const middleIndex = Math.floor(filteredPageNumbers.length / 2);
     const halfIndex = Math.floor(filteredPageNumbers.length / dropdownValue);
 

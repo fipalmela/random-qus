@@ -25,10 +25,9 @@ p.number-display {
   margin-bottom: 40px;
   margin-top: 0;
   padding-top: 0;
-  line-break: anywhere;
+  line-break: auto;
   line-height: 1em;
 }
-
 .input-wrapper input {
   padding: 10px;
   margin-right: 20px;
