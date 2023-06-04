@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./style.css";
 import Logo from "./logo.svg";
 
-const randomThreeDigitNumber = () => {
+/* const randomThreeDigitNumber = () => {
   const min = 100; // Minimum value (inclusive)
   const max = 999; // Maximum value (inclusive)
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}; */
 
 // Available sets/categories with their corresponding start and end page numbers
 const sets = {
@@ -64,9 +64,8 @@ const sets = {
 const App = () => {
   const [setSelected, setSetSelected] = useState("A28");
   const [resultPageNumber, setResultPageNumber] = useState("");
-  const [outOfPageNumbers, setOutOfPageNumbers] = useState(0);
-  const [animatedCounter1, setAnimatedCounter1] = useState(0);
-  const [animatedCounter2, setAnimatedCounter2] = useState(0);
+  const [outOfPageNumbers, setOutOfPageNumbers] = useState(false);
+  const [animatedCounter, setAnimatedCounter] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [generatedPageNumbers, setgeneratedPageNumbers] = useState([]);
   const [showGenerated, setShowGenerated] = useState(false);
@@ -76,6 +75,17 @@ const App = () => {
   const handleDropdownChange = (event) => {
     const { value } = event.target;
     setSelectedCount(parseInt(value));
+  };
+
+  const generatePairs = (array, elementsPerPair) => {
+    const pairs = [];
+
+    for (let i = 0; i < array.length; i += elementsPerPair) {
+      const pair = array.slice(i, i + elementsPerPair);
+      pairs.push(pair);
+    }
+
+    return pairs;
   };
 
   const generateSets = (count) => {
@@ -89,24 +99,37 @@ const App = () => {
     return setsString;
   };
 
-  useEffect(() => {
-    let timer;
-    if (isRunning) {
-      timer = setInterval(() => {
-        setAnimatedCounter1(randomThreeDigitNumber());
-        setAnimatedCounter2(randomThreeDigitNumber());
-      }, 10);
+  const generateRandomNumbers = (count) => {
+    const min = 100; // Minimum value (inclusive)
+    const max = 999; // Maximum value (inclusive)
+    const numbers = [];
+    for (let i = 0; i < count; i++) {
+      numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
     }
-    return () => clearInterval(timer);
-  }, [isRunning]);
+    return numbers;
+  };
+
+  useEffect(() => {
+    if (!outOfPageNumbers) {
+      let timer;
+      if (isRunning) {
+        timer = setInterval(() => {
+          setAnimatedCounter(generateRandomNumbers(selectedCount)); // Set an array of three random numbers
+        }, 10);
+      }
+      return () => clearInterval(timer);
+    }
+  }, [isRunning, outOfPageNumbers, selectedCount]);
+
+  console.log(animatedCounter);
 
   const handleStartStop = () => {
     if (!setSelected) {
       alert("No Category Selected");
     } else {
       setShowGenerated(false);
-      setIsRunning(!isRunning);
-      if (!isRunning) generatePageNumbers();
+      if (!outOfPageNumbers) setIsRunning(!isRunning);
+      if (!isRunning && !outOfPageNumbers) generatePageNumbers();
     }
   };
 
@@ -165,6 +188,8 @@ const App = () => {
   const resetPageNumbers = () => {
     localStorage.removeItem("generatedPageNumbers");
     setgeneratedPageNumbers([]);
+    setOutOfPageNumbers(false);
+    setIsRunning(false);
   };
 
   useEffect(() => {
@@ -178,18 +203,13 @@ const App = () => {
     }
   }, []);
 
-  const generatePairs = (array, elementsPerPair) => {
-    const pairs = [];
-
-    for (let i = 0; i < array.length; i += elementsPerPair) {
-      const pair = array.slice(i, i + elementsPerPair);
-      pairs.push(pair);
-    }
-
-    return pairs;
-  };
-
   const pairs = generatePairs(generatedPageNumbers, selectedCount);
+
+  // if (resultPageNumber) console.log(typeof resultPageNumber.join(', '));
+
+  const addSpaceAfterComma = (str) => {
+    return str.replace(/,/g, ', ');
+  }
 
   return (
     <>
@@ -233,13 +253,24 @@ const App = () => {
           {isRunning ? (
             <div className={`counter-wrapper ${isRunning ? "" : "hide"}`}>
               <p className="number-display">
-                {animatedCounter1}, {animatedCounter2}
+              {animatedCounter.join(', ')}
               </p>
             </div>
           ) : (
             <div className={`counter-wrapper ${isRunning ? "hide" : ""}`}>
               <p className="number-display">
-                {resultPageNumber ? <>{resultPageNumber.join(', ')}</> : <>{generateSets(selectedCount)}</>}
+                {
+                  resultPageNumber ? (
+                    <>
+                      {addSpaceAfterComma(resultPageNumber.join(', '))}
+                    </>
+                  ) :
+                  (
+                    <>
+                    {generateSets(selectedCount)}
+                    </>
+                  )
+                }
               </p>
             </div>
           )}
@@ -247,17 +278,32 @@ const App = () => {
         <div className="button-wrapper">
           <button
             onClick={handleStartStop}
-            className={`button-82-pushable ${outOfPageNumbers ? 'true' : 'false'}`}
+            className={`button-82-pushable ${outOfPageNumbers ? 'disalbed' : ''}`}
           >
             <span className="button-82-shadow"></span>
             <span className="button-82-edge"></span>
             <span className="button-82-front text">
-              {isRunning ? "Stop" : "Start"}
+              {
+                outOfPageNumbers ? (
+                  <>
+                   Start
+                  </>
+                ) : (
+                  <>
+                    {isRunning ? "Stop" : "Start"}
+                  </>
+                )
+              }
             </span>
           </button>
           <br />
           <br />
         </div>
+          {
+            outOfPageNumbers  && (
+              <p> Please reset to regenerate new page numbers. </p>
+            )
+          }
         <div className="gen-numbers-wrapper">
           <div className="gen-numbers-item">
 
@@ -282,17 +328,35 @@ const App = () => {
             )}
           </div>
           <div className="gen-numbers-btns">
-            <button
-              disabled={isRunning}
-              className="reset"
-              onClick={() => {
-                if (!isRunning) {
-                  setShowGenerated(!showGenerated);
-                }
-              }}
-            >
-              {showGenerated ? <>Hide</> : <>List</>}
-            </button>
+            {
+              outOfPageNumbers ? (
+                <>
+                  <button
+                  className="reset"
+                    onClick={() => {
+                        setShowGenerated(!showGenerated);
+                    }}
+                  >
+                    {showGenerated ? <>Hide</> : <>List</>}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                  className="reset"
+                    disabled={isRunning}
+                    onClick={() => {
+                      if (!isRunning) {
+                        setShowGenerated(!showGenerated);
+                      }
+                    }}
+                  >
+                    {showGenerated ? <>Hide</> : <>List</>}
+                  </button>
+                </>
+              )
+            }
+
             <button className="reset" onClick={resetPageNumbers}>
               Reset all
             </button>

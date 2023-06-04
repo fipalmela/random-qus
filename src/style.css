@@ -18,7 +18,7 @@ body {
   border-radius: 6px;
 }
 p.number-display {
-  font-size: 200px;
+  font-size: 175px;
   font-weight: 700;
   display: inline-block;
   margin-right: 20px;
@@ -27,10 +27,6 @@ p.number-display {
   padding-top: 0;
   line-break: anywhere;
   line-height: 1em;
-}
-
-.counter-wrapper.hide {
-  display: none;
 }
 
 .input-wrapper input {
@@ -150,6 +146,18 @@ select:-moz-focusring {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+
+button.button-82-pushable.disalbed {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+button.button-82-pushable.disalbed .button-82-front {
+  background-color: gray;
+}
+button.button-82-pushable.disalbed .button-82-edge {
+  background: rgb(140, 140, 140);
 }
 
 .button-82-shadow {
@@ -276,7 +284,9 @@ span.gen-numbers-set {
   border-radius: 3px;
   font-weight: 500;
 }
-
+.gen-numbers-set:empty {
+  display: none !important;
+}
 .gen-numbers-btns {
   display: flex;
   min-width: 140px;
