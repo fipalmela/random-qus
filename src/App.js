@@ -123,7 +123,6 @@ const App = () => {
     }
   }, [isRunning, outOfPageNumbers, selectedCount]);
 
-  console.log(animatedCounter);
 
   const handleStartStop = () => {
     if (!setSelected) {
@@ -135,11 +134,8 @@ const App = () => {
     }
   };
 
-
-
   const handleSetChange = (e) => {
     setSetSelected(e.target.value);
-    resetPageNumbers();
     setShowGenerated(false);
   };
   const generatePageNumbers = () => {
