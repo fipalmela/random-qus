@@ -63,13 +63,31 @@ const sets = {
 };
 const App = () => {
   const [setSelected, setSetSelected] = useState("A28");
-  const [pageNum1, setPageNum1] = useState("");
-  const [pageNum2, setPageNum2] = useState("");
+  const [resultPageNumber, setResultPageNumber] = useState("");
+  const [outOfPageNumbers, setOutOfPageNumbers] = useState(0);
   const [animatedCounter1, setAnimatedCounter1] = useState(0);
   const [animatedCounter2, setAnimatedCounter2] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [generatedPageNumbers, setgeneratedPageNumbers] = useState([]);
   const [showGenerated, setShowGenerated] = useState(false);
+
+  const [selectedCount, setSelectedCount] = useState(1);
+
+  const handleDropdownChange = (event) => {
+    const { value } = event.target;
+    setSelectedCount(parseInt(value));
+  };
+
+  const generateSets = (count) => {
+    if (count < 1) {
+      return "";
+    }
+
+    const setsArray = Array(count).fill("000");
+    const setsString = setsArray.join(", ");
+
+    return setsString;
+  };
 
   useEffect(() => {
     let timer;
@@ -85,19 +103,18 @@ const App = () => {
   const handleStartStop = () => {
     if (!setSelected) {
       alert("No Category Selected");
-      return;
-    }
-    setShowGenerated(false);
-    setIsRunning(!isRunning);
-    if (!isRunning) {
-      generatePageNumbers();
+    } else {
+      setShowGenerated(false);
+      setIsRunning(!isRunning);
+      if (!isRunning) generatePageNumbers();
     }
   };
+
+
 
   const handleSetChange = (e) => {
     setSetSelected(e.target.value);
   };
-
   const generatePageNumbers = () => {
     const { startPage, endPage } = sets[setSelected];
     const numbersArray = Array.from(
@@ -109,31 +126,35 @@ const App = () => {
       (number) => !generatedPageNumbers.includes(number)
     );
 
-    const middleIndex = Math.floor(filteredPageNumbers.length / 2);
+    const dropdownValue = selectedCount;
 
-    if (middleIndex < 1) {
-      alert("Number not available.");
-      return;
+    // const middleIndex = Math.floor(filteredPageNumbers.length / 2);
+    const halfIndex = Math.floor(filteredPageNumbers.length / dropdownValue);
+
+    setOutOfPageNumbers(halfIndex < 1);
+    if (halfIndex < 1) {
+      return alert("Out of page Numbers");
     }
 
-    const [firstHalf, secondHalf] = [
-      filteredPageNumbers.slice(0, middleIndex),
-      filteredPageNumbers.slice(middleIndex),
-    ];
+    const allHalves = [];
+    for (let i = 0; i < dropdownValue; i++) {
+      const start = i * halfIndex;
+      const end = i === dropdownValue - 1 ? filteredPageNumbers.length : (i + 1) * halfIndex;
+      const half = filteredPageNumbers.slice(start, end);
+      allHalves.push(half);
+    }
 
-    const pageNumOne =
-      firstHalf[Math.floor(Math.random() * firstHalf.length)];
-    const pageNumTwo =
-      secondHalf[Math.floor(Math.random() * secondHalf.length)];
 
-    setPageNum1(pageNumOne);
-    setPageNum2(pageNumTwo);
+    const randomIndexes = allHalves.map(half => Math.floor(Math.random() * half.length));
+    const pageNumbers = randomIndexes.map((index, i) => allHalves[i][index]);
+
+    setResultPageNumber(generatePairs(pageNumbers,dropdownValue));
 
     const updatedgeneratedPageNumbers = [
       ...generatedPageNumbers,
-      pageNumOne,
-      pageNumTwo,
+      ...pageNumbers
     ];
+
     localStorage.setItem(
       "generatedPageNumbers",
       JSON.stringify(updatedgeneratedPageNumbers)
@@ -144,8 +165,6 @@ const App = () => {
   const resetPageNumbers = () => {
     localStorage.removeItem("generatedPageNumbers");
     setgeneratedPageNumbers([]);
-    setPageNum1("");
-    setPageNum2("");
   };
 
   useEffect(() => {
@@ -159,16 +178,27 @@ const App = () => {
     }
   }, []);
 
-  const pairs = [];
-  for (let i = 0; i < generatedPageNumbers.length; i += 2) {
-    pairs.push([generatedPageNumbers[i], generatedPageNumbers[i + 1]]);
-  }
+  const generatePairs = (array, elementsPerPair) => {
+    const pairs = [];
+
+    for (let i = 0; i < array.length; i += elementsPerPair) {
+      const pair = array.slice(i, i + elementsPerPair);
+      pairs.push(pair);
+    }
+
+    return pairs;
+  };
+
+  const pairs = generatePairs(generatedPageNumbers, selectedCount);
 
   return (
     <>
       <div className="logo">
         <div className="div">
           <img width={200} alt="logo" src={Logo} />
+        </div>
+        <div className="div">
+
         </div>
         <div className="dropdown">
           <label>
@@ -187,6 +217,15 @@ const App = () => {
             </select>
           </label>
         </div>
+        <div className="div">
+          <select id="dropdown" value={selectedCount} onChange={handleDropdownChange}>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
       </div>
       <div className="App">
         <div className="numbers-wrapper">
@@ -199,15 +238,16 @@ const App = () => {
             </div>
           ) : (
             <div className={`counter-wrapper ${isRunning ? "hide" : ""}`}>
-              <p className="number-display">{pageNum1 ? <>{pageNum1},</> : <>00,</>}</p>
-              <p className="number-display">{pageNum2 ? <>{pageNum2}</> : <>00</>}</p>
+              <p className="number-display">
+                {resultPageNumber ? <>{resultPageNumber.join(', ')}</> : <>{generateSets(selectedCount)}</>}
+              </p>
             </div>
           )}
         </div>
         <div className="button-wrapper">
           <button
             onClick={handleStartStop}
-            className="button-82-pushable"
+            className={`button-82-pushable ${outOfPageNumbers ? 'true' : 'false'}`}
           >
             <span className="button-82-shadow"></span>
             <span className="button-82-edge"></span>
@@ -220,6 +260,7 @@ const App = () => {
         </div>
         <div className="gen-numbers-wrapper">
           <div className="gen-numbers-item">
+
             {showGenerated && (
               <>
                 {pairs.length !== 0 ? (
