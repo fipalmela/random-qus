@@ -65,7 +65,7 @@ const sets = {
     startPage: 3,
     endPage: 21
   },
-  "A30": {
+  "A2": {
     ajza: "1 Juz (30)",
     startPage: 582,
     endPage: 604
@@ -265,7 +265,28 @@ const App = () => {
   const addSpaceAfterComma = (str) => {
     return str.replace(/,/g, ', ');
   }
-
+const fontsizedisplay = () => {
+  let size;
+  switch (selectedCount) {
+    case 1:
+      // Code block to be executed when selectedCount is 1
+      size = '175px'
+      break;
+    case 2:
+      // Code block to be executed when selectedCount is 2
+      size = '155px'
+      break;
+    case 3:
+      // Code block to be executed when selectedCount is 3
+      size = '145px'
+      break;
+    default:
+      // Code block to be executed when selectedCount doesn't match any case
+      size = '145px'
+      break;
+  }
+  return size;
+}
   return (
     <>
       <div className="logo">
@@ -311,7 +332,7 @@ const App = () => {
             </div>
           ) : (
             <div className={`counter-wrapper ${isRunning ? "hide" : ""}`}>
-              <p className="number-display">
+              <p className="number-display" style={{fontSize: `${fontsizedisplay()}`}}>
                 {
                   resultPageNumber ? (
                     <>
