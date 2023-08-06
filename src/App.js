@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import Logo from "./logo.svg";
+import Logo from "./logo_tarteel.png";
 
-/* const randomThreeDigitNumber = () => {
-  const min = 100; // Minimum value (inclusive)
-  const max = 999; // Maximum value (inclusive)
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}; */
 
-// Available sets/categories with their corresponding start and end page numbers
-const sets = {
+// Set for FIP
+/* const sets = {
   "A28": {
     ajza: "1 Juz (28)",
     startPage: 542,
@@ -61,8 +56,69 @@ const sets = {
     endPage: 604
   }
 };
+ */
+
+// Set for Tarteel
+const sets = {
+  "A1": {
+    ajza: "1 Juz (1)",
+    startPage: 3,
+    endPage: 21
+  },
+  "A30": {
+    ajza: "1 Juz (30)",
+    startPage: 582,
+    endPage: 604
+  },
+  "B1": {
+    ajza: "3 Ajza (1 - 3)",
+    startPage: 3,
+    endPage: 61
+  },
+  "B2": {
+    ajza: "3 Ajza (28 - 30)",
+    startPage: 542,
+    endPage: 604
+  },
+  "C1": {
+    ajza: "5 Ajza (1 - 5)",
+    startPage: 3,
+    endPage: 101
+  },
+  "C2": {
+    ajza: "5 Ajza (26 - 30)",
+    startPage: 502,
+    endPage: 589
+  },
+  "D1": {
+    ajza: "10 Ajza (1 - 10)",
+    startPage: 3,
+    endPage: 200
+  },
+  "D2": {
+    ajza: "10 Ajza (20 - 30)",
+    startPage: 382,
+    endPage: 589
+  },
+  "E1": {
+    ajza: "15 Ajza (1 - 15)",
+    startPage: 3,
+    endPage: 281
+  },
+  "E2": {
+    ajza: "15 Ajza (16 - 30)",
+    startPage: 302,
+    endPage: 589
+  },
+  "F": {
+    ajza: "Whole Quran",
+    startPage: 3,
+    endPage: 589
+  }
+};
+
 const App = () => {
-  const [setSelected, setSetSelected] = useState("A28");
+  const [setSelected, setSetSelected] = useState("A1");
   const [resultPageNumber, setResultPageNumber] = useState("");
   const [outOfPageNumbers, setOutOfPageNumbers] = useState(false);
   const [animatedCounter, setAnimatedCounter] = useState([]);
@@ -277,9 +333,9 @@ const App = () => {
             onClick={handleStartStop}
             className={`button-82-pushable ${outOfPageNumbers ? 'disalbed' : ''}`}
           >
-            <span className="button-82-shadow"></span>
-            <span className="button-82-edge"></span>
-            <span className="button-82-front text">
+            {/* <span className="button-82-shadow"></span>
+            <span className="button-82-edge"></span> */}
+            <span className="button-82-front text" style={{backgroundColor: isRunning ? '#978E8E' : '#717171'}}>
               {
                 outOfPageNumbers ? (
                   <>

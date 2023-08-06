@@ -27,5 +27,5 @@ jobs:
             password: ${{ secrets.SFTP_PASSWORD }}
             port: ${{ secrets.SFTP_PORT }}
             local_path: './build/*'
-            remote_path: '/public_html/generator'
+            remote_path: '/public_html/tarteel/generator'
             sftp_only: true
