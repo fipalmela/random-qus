@@ -1,64 +1,56 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import Logo from "./logo.svg";
+import Logo from "./jkbw_logo.png";
 
 
 // Set for FIP
 const sets = {
-  "A28": {
-    ajza: "1 Juz (28)",
-    startPage: 542,
-    endPage: 561
+  "A1": {
+    ajza: "1 Juz (1)",
+    startPage: 3,
+    endPage: 21
   },
-  "A29": {
-    ajza: "1 Juz (29)",
-    startPage: 562,
-    endPage: 581
+
+  "A2": {
+      ajza: "1 Juz (30)",
+      startPage: 582,
+      endPage: 600
   },
-  "A30": {
-    ajza: "1 Juz (30)",
-    startPage: 582,
-    endPage: 604
-  },
+
   "B1": {
-    ajza: "3 Ajza (1 - 3)",
-    startPage: 3,
-    endPage: 61
+      ajza: "5 Ajza (1 - 5)",
+      startPage: 3,
+      endPage: 101
   },
+
   "B2": {
-    ajza: "3 Ajza (28 - 30)",
-    startPage: 542,
-    endPage: 604
+      ajza: "5 Ajza (26 - 30)",
+      startPage: 502,
+      endPage: 589
   },
+
   "C1": {
-    ajza: "6 Ajza (1 - 6)",
-    startPage: 3,
-    endPage: 101
+      ajza: "15 Ajza (1 - 15)",
+      startPage: 3,
+      endPage: 301
   },
+
   "C2": {
-    ajza: "6 Ajza (25 - 30)",
-    startPage: 482,
-    endPage: 604
+      ajza: "15 Ajza (16 - 30)",
+      startPage: 302,
+      endPage: 589
   },
-  "D1": {
-    ajza: "15 Ajza (1 - 15)",
-    startPage: 3,
-    endPage: 281
-  },
-  "D2": {
-    ajza: "15 Ajza (16 - 30)",
-    startPage: 302,
-    endPage: 604
-  },
-  "E": {
-    ajza: "Whole Quran",
-    startPage: 3,
-    endPage: 604
+
+  "D": {
+      ajza: "Whole Quran",
+      startPage: 3,
+      endPage: 589
   }
+
 };
 
 const App = () => {
-  const [setSelected, setSetSelected] = useState("A28");
+  const [setSelected, setSetSelected] = useState("A1");
   const [resultPageNumber, setResultPageNumber] = useState("");
   const [outOfPageNumbers, setOutOfPageNumbers] = useState(false);
   const [animatedCounter, setAnimatedCounter] = useState([]);

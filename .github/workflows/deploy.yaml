@@ -3,7 +3,7 @@ name: Upload via SFTP
 on:
   push:
     branches:
-      - fip
+      - jkbw
 
 jobs:
   deploy:
