@@ -1,56 +1,32 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import Logo from "./jkbw_logo.png";
+import Logo from "./logo.png";
 
 
 // Set for FIP
 const sets = {
-  "A1": {
-    ajza: "1 Juz (1)",
+  "A": {
+    ajza: "Full Quran (1 - 30)",
     startPage: 3,
-    endPage: 21
+    endPage: 604
   },
 
-  "A2": {
-      ajza: "1 Juz (30)",
-      startPage: 582,
-      endPage: 600
+  "B": {
+    ajza: "20 Ajza (1 - 20)",
+    startPage: 3,
+    endPage: 401
   },
 
-  "B1": {
-      ajza: "5 Ajza (1 - 5)",
-      startPage: 3,
-      endPage: 101
+  "C": {
+    ajza: "10 Ajza (1 - 10)",
+    startPage: 3,
+    endPage: 200
   },
-
-  "B2": {
-      ajza: "5 Ajza (26 - 30)",
-      startPage: 502,
-      endPage: 589
-  },
-
-  "C1": {
-      ajza: "15 Ajza (1 - 15)",
-      startPage: 3,
-      endPage: 301
-  },
-
-  "C2": {
-      ajza: "15 Ajza (16 - 30)",
-      startPage: 302,
-      endPage: 589
-  },
-
-  "D": {
-      ajza: "Whole Quran",
-      startPage: 3,
-      endPage: 589
-  }
 
 };
 
 const App = () => {
-  const [setSelected, setSetSelected] = useState("A1");
+  const [setSelected, setSetSelected] = useState("A");
   const [resultPageNumber, setResultPageNumber] = useState("");
   const [outOfPageNumbers, setOutOfPageNumbers] = useState(false);
   const [animatedCounter, setAnimatedCounter] = useState([]);

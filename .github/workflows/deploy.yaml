@@ -3,7 +3,7 @@ name: Upload via SFTP
 on:
   push:
     branches:
-      - jkbw
+      - habib
 
 jobs:
   deploy:
@@ -27,5 +27,5 @@ jobs:
             password: ${{ secrets.SFTP_PASSWORD }}
             port: ${{ secrets.SFTP_PORT }}
             local_path: './build/*'
-            remote_path: '/public_html/jkbw/generator'
+            remote_path: '/public_html/habib/generator'
             sftp_only: true
