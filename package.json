@@ -1,7 +1,7 @@
 {
   "name": "generator",
   "version": "0.2.0",
-  "homepage": "/jkbw/generator",
+  "homepage": "/ahlul-quran/generator",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",

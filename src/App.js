@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import Logo from "./jkbw_logo_transparent.png";
+import Logo from "./ecra-logo.png";
 
 
 // Set for FIP
