@@ -3,61 +3,6 @@ import "./style.css";
 import Logo from "./logo_tarteel.png";
 
 
-// Set for FIP
-/* const sets = {
-  "A28": {
-    ajza: "1 Juz (28)",
-    startPage: 542,
-    endPage: 561
-  },
-  "A29": {
-    ajza: "1 Juz (29)",
-    startPage: 562,
-    endPage: 581
-  },
-  "A30": {
-    ajza: "1 Juz (30)",
-    startPage: 582,
-    endPage: 604
-  },
-  "B1": {
-    ajza: "3 Ajza (1 - 3)",
-    startPage: 3,
-    endPage: 61
-  },
-  "B2": {
-    ajza: "3 Ajza (28 - 30)",
-    startPage: 542,
-    endPage: 604
-  },
-  "C1": {
-    ajza: "6 Ajza (1 - 6)",
-    startPage: 3,
-    endPage: 101
-  },
-  "C2": {
-    ajza: "6 Ajza (25 - 30)",
-    startPage: 482,
-    endPage: 604
-  },
-  "D1": {
-    ajza: "15 Ajza (1 - 15)",
-    startPage: 3,
-    endPage: 281
-  },
-  "D2": {
-    ajza: "15 Ajza (16 - 30)",
-    startPage: 302,
-    endPage: 604
-  },
-  "E": {
-    ajza: "Whole Quran",
-    startPage: 3,
-    endPage: 604
-  }
-};
- */
-
 // Set for Tarteel
 const sets = {
   "A1": {
@@ -69,6 +14,11 @@ const sets = {
     ajza: "1 Juz (30)",
     startPage: 582,
     endPage: 604
+  },
+  "B0": {
+    ajza: "2.5 Ajza",
+    startPage: 3,
+    endPage: 53
   },
   "B1": {
     ajza: "3 Ajza (1 - 3)",
