@@ -3,7 +3,7 @@ import "./style.css";
 import Logo from "./logo_tarteel.png";
 
 
-// Set for Tarteel
+// Set for Tartee
 const sets = {
   "A1": {
     ajza: "1 Juz (1)",
